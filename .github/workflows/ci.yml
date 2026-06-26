@@ -24,19 +24,9 @@ jobs:
       CEL_MEMORY_POSTGRES_URL: postgres://postgres:postgres@localhost:5432/cel_memory_test
     steps:
       - uses: actions/checkout@v4
-        with:
-          path: cel-memory-postgres
-      - uses: actions/checkout@v4
-        with:
-          repository: dimpagk92/cel-memory
-          path: cel-memory
       - uses: dtolnay/rust-toolchain@stable
       - uses: Swatinem/rust-cache@v2
-        with:
-          workspaces: cel-memory-postgres
       - run: cargo fmt --check
-        working-directory: cel-memory-postgres
       - run: cargo clippy --all-targets -- -D warnings
-        working-directory: cel-memory-postgres
       - run: cargo test --all-targets
-        working-directory: cel-memory-postgres
+      - run: cargo publish --dry-run
